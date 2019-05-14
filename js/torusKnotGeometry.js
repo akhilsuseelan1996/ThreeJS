@@ -6,12 +6,12 @@ var camera = new THREE.PerspectiveCamera(
   1000
 );
 
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 var geometry = new THREE.TorusKnotBufferGeometry(10, 3, 100, 10);
-var material = new THREE.MeshBasicMaterial({
+var material = new THREE.MeshPhongMaterial({
   color: 0x6b0202,
   wireframe: true,
   transparent: true
@@ -20,15 +20,21 @@ var torusKnot = new THREE.Mesh(geometry, material);
 scene.add(torusKnot);
 
 var geometry = new THREE.SphereGeometry(2, 32, 32);
-var material = new THREE.MeshBasicMaterial({
-  color: 0x02116b,
+var material = new THREE.MeshPhongMaterial({
+  color: 0x03122d,
   wireframe: true,
-  transparent: false
+  transparent: true
 });
 var sphereFrame = new THREE.Mesh(geometry, material);
 scene.add(sphereFrame);
 
-camera.position.z = 40;
+var light = new THREE.AmbientLight(0x404040); // soft white light
+scene.add(light);
+
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+scene.add(directionalLight);
+
+camera.position.z = 30;
 
 function animate() {
   requestAnimationFrame(animate);
