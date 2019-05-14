@@ -6,14 +6,15 @@ var camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-var renderer = new THREE.WebGLRenderer();
+var renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.shadowMap.enabled = true;
 document.body.appendChild(renderer.domElement);
 
 //Basic Cube
 var geometry = new THREE.BoxGeometry(2, 2, 2);
-var material = new THREE.MeshBasicMaterial(
-  { color: 0xff0051 },
+var material = new THREE.MeshPhongMaterial(
+  { color: 0x03122d },
   { flatShading: true },
   { metalness: 0 },
   { roughness: 1 }
@@ -22,9 +23,9 @@ var cube = new THREE.Mesh(geometry, material);
 scene.add(cube);
 
 //wireFrame
-var geometry = new THREE.BoxGeometry(5, 5, 5, 5, 5, 5);
-var material = new THREE.MeshBasicMaterial({
-  color: "#dadada",
+var geometry = new THREE.BoxGeometry(5, 5, 5, 5, 5);
+var material = new THREE.MeshPhongMaterial({
+  color: 0x6b0202,
   wireframe: true,
   transparent: true
 });
@@ -45,9 +46,8 @@ function animate() {
 animate();
 
 //Adding light to render the 3D object
-var ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-scene.add(ambientLight);
+var light = new THREE.HemisphereLight(0xffffbb, 0x080820, 1);
+scene.add(light);
 
-var pointLight = new THREE.PointLight(0xffffff, 1);
-pointLight.position.set(25, 50, 25);
-scene.add(pointLight);
+var directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+scene.add(directionalLight);
